@@ -1,0 +1,125 @@
+<odoo>
+  <data>
+<!--#################################################################################################################-->
+    <record id="property_form" model="ir.ui.view">
+        <field name="name">property_form</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <form string="property_form">
+                <header>
+<!--                    class = (**    btn-primary  ->  perper **    ** btn-secondary -> white **    **  btn-success -> Green **)               -->
+                    <button name="back_state"     string="Back to Undefined" class="btn-success" states="draft"    type="object"/>
+                    <button name="back_state"     string="Back to Draft"     class="btn-success" states="pending"  type="object"/>
+                    <button name="back_state"     string="Back to Pending"   class="btn-success" states="sold"     type="object"/>
+<!--                   #####################################################################################################        -->
+                    <button name="change_state"   string="Go To Draft"          class="btn-primary"                   type="object"    attrs="{'invisible': [('state', '!=', False)]}"/>
+                    <button name="change_state"   string="Pending"          class="btn-primary" states="draft"  type="object"/>
+                    <button name="change_state"   string="Sold"           class="btn-primary" states="pending"  type="object"/>
+<!--                   #####################################################################################################        -->
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <field name="img" widget="image" class="oe_avatar m-0"/>
+                    </div>
+
+                        <div class="oe_title" >
+                                    <label for ="name"/>
+                                        <h1>  <field name="name"/> </h1>
+                                    <label for ="code"/>
+                                            <h3><field name="code"/></h3>
+                                    <label for ="des"/>
+                                            <h3><field name="des"/></h3>
+                        </div>
+                    <group>
+                        <group string="First Data">
+                            <field name="owner_id"/>
+                            <field name="date_availability"/>
+                            <field name="expected_price"/>
+                            <field name="selling_price"/>
+
+                        </group>
+                        <group string="Second Data">
+                            <field name="postcode"/>
+                            <field name="garage"/>
+                            <field name="garden"/>
+                            <field name="garden_area"/>
+                            <field name="garden_orientation"/>
+                            <field name="facades"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Rooms">
+                             <group>
+                               <group>
+                                        <field name="living_area"/>
+                                        <field name="bedrooms"/>
+                               </group>
+                               <group>
+                                        <field name="kitchen"/>
+                               </group>
+                             </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+
+            </form>
+        </field>
+    </record>
+<!--#################################################################################################################-->
+    <record id="property_tree" model="ir.ui.view">
+        <field name="name">property_tree</field>
+        <field name="model">property</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <header>
+                        <button name="property_xlsx_report"     string="Excel Report" class="btn-success"  type="object"/>
+                        <button name="property_docx_report"     string="Word Report" class="btn-success"  type="object"/>
+                </header>
+
+                <field name="name"/>
+                <field name="postcode"/>
+                <field name="bedrooms" optional="1"/>
+                <field name="expected_price" optional="1"/>
+                <field name="selling_price" optional="1"/>
+            </tree>
+        </field>
+    </record>
+<!--#################################################################################################################-->
+    <record id="property_search" model="ir.ui.view">
+       <field name="name">property_search</field>
+       <field name="model">property</field>
+        <field name="arch" type="xml">
+            <search string="search">
+            <field name="name" string="name" />
+            <field name="garage" string="name" />
+            <field name="garden" string="name" />
+            <filter name="state_draft"      string="Draft State"      domain="[('state','=','draft')]"/>
+            <filter name="state_pending"    string="Pending State"    domain="[('state','=','pending')]"/>
+            <filter name="state_sold"       string="Sold State"       domain="[('state','=','sold' )]"/>
+
+            <filter name="with_garden"       string="Without Garden is a East"      domain="[('garden','=',True )]"/>
+            <filter name="without_garden"    string="Without Garden is a East"      domain="[('garden','=',False )]"/>
+            <filter name="is_state_orientation"       string="Garden Orientation"    context="{'group_by' : 'garden_orientation' }"/>
+        </search>
+       </field>
+    </record>
+<!--#################################################################################################################-->
+    <record id="property_actions" model="ir.actions.act_window">
+        <field name="name">Property</field>
+        <field name="res_model">property</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+<!--#################################################################################################################-->
+    <menuitem id="ID_real_state" name="Real State" action="property_actions" web_icon="Real Estate,static/description/icon.png" sequence="1"/>
+    <menuitem id="ID_Property" name="Property" parent="ID_real_state" action="property_actions" sequence="20"/>
+
+<!--#################################################################################################################-->
+  </data>
+</odoo>

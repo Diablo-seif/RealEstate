@@ -1,0 +1,100 @@
+<odoo>
+  <data>
+<!--#################################################################################################################-->
+    <record id="owner_form" model="ir.ui.view">
+        <field name="name">owner_form</field>
+        <field name="model">owner</field>
+        <field name="arch" type="xml">
+            <form string="owner_form">
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                            <button name="action_create_property"
+                                string="Create Property"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-plus"
+                                style="float: left;"/>
+
+                    </div>
+
+                    <div>
+                        <field name="img" widget="image" class="oe_avatar m-0"/>
+                    </div>
+                        <div class="oe_title" >
+                                    <label for ="name"/>
+                                        <h1>
+                                                <field name="name"/>
+                                        </h1>
+                        </div>
+                                    <notebook>
+                                    <page string="Data">
+                                        <group>
+                                            <field name="gender"/>
+                                        </group>
+                                    </page>
+                                        <page string="properties">
+                                            <field name="property_ids" readonly="1">
+                                                <tree string="Properties" editable="bottom">
+                                                    <field name="name"/>
+                                                    <field name="code"/>
+                                                    <field name="des" string="Description"/>
+                                                    <field name="state"/>
+                                                    <field name="expected_price"/>
+                                                    <field name="selling_price"/>
+                                                </tree>
+                                            </field>
+
+
+                                        </page>
+                                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+<!--#################################################################################################################-->
+    <record id="owner_tree" model="ir.ui.view">
+        <field name="name">owner_tree</field>
+        <field name="model">owner</field>
+        <field name="arch" type="xml">
+            <tree string="">
+                <header>
+                    <button name="owner_excel_report" string="Excel Report"
+                            class="oe_button_box" type="object"/>
+
+                </header>
+
+                <field name="name"/>
+                <field name="property_ids"/>
+
+            </tree>
+        </field>
+    </record>
+<!--#################################################################################################################-->
+    <record id="owner_search" model="ir.ui.view">
+       <field name="name">owner_search</field>
+       <field name="model">owner</field>
+        <field name="arch" type="xml">
+            <search string="search">
+            <field name="name" string="name" />
+            <field name="property_ids" string="Property" />
+        </search>
+       </field>
+    </record>
+<!--#################################################################################################################-->
+    <record id="owner_actions" model="ir.actions.act_window">
+        <field name="name">Owner</field>
+        <field name="res_model">owner</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+<!--#################################################################################################################-->
+    <menuitem id="ID_owner" name="Owner" parent="ID_real_state" action="owner_actions" sequence="30"/>
+
+<!--#################################################################################################################-->
+  </data>
+</odoo>
